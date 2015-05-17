@@ -9,27 +9,36 @@
 import UIKit
 
 class TaskDetailViewController: UIViewController {
-
+    
+    var detailTaskModel: TaskModel!
+    
+    @IBOutlet weak var taskTextField: UITextField!
+    @IBOutlet weak var subtaskTextField: UITextField!
+    @IBOutlet weak var datePicker: UIDatePicker!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        
+        // Setup UI from Previous ViewController 
+        self.taskTextField.text = detailTaskModel.task
+        self.subtaskTextField.text = detailTaskModel.subtask
+        self.datePicker.date = detailTaskModel.date
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
-    */
+    
+    @IBAction func doneBarButtonItemPressed(sender: UIBarButtonItem) {
+        let appDelegate = UIApplication.sharedApplication().delegate as AppDelegate
+        self.detailTaskModel.task = self.taskTextField.text
+        self.detailTaskModel.subtask = self.subtaskTextField.text
+        self.detailTaskModel.date = self.datePicker.date
+        self.detailTaskModel.isCompleted = self.detailTaskModel.isCompleted
+        appDelegate.saveContext() // saving the context will update the task/object in Core Data
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
+    
 
 }

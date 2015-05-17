@@ -8,7 +8,7 @@
 
 import Foundation
 import CoreData
-
+@objc(TaskModel) // Creates an Objective-C Bridge 
 class TaskModel: NSManagedObject {
 
     @NSManaged var task: String
